@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'books/css/style.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+    <title>books</title>
+</head>
+<body>
+    <h1>welcome {{currentuser.firstname}}</h1>
+    <div class="reviews">
+        <h1>recent book reviews:</h1>
+        {%for review in reviews reversed%}
+        <h4><a href="books/{{review.book_id}}">title:{{book.title}}</a></h4>
+        <p>rating: <span class="stars" data-stars="{{review.rating}}">xxxxx</span></p>
+        <p>{{review.content}}</p>
+        <p>posted on: -- {{review.created_at}}</p>
+        {%endfor%}
+    </div>
+    <div class="books">
+        <h3>other books with reviews</h3>
+        {%for book in books%}
+        <div class="scrollbox">
+        <a href="/books/{{book.id}}">{{book.title}}</a>
+    </div>
+        {%endfor%}
+    </div>
+</body>
+</html>
