@@ -11,35 +11,43 @@
     <title>books</title>
 </head>
 <body>
-    <div class="jumbotron text-center">Book title: {{book.title}}</div>
+    <div class="jumbotron text-center"><h1>Book title: {{book.title}}</h1></div>
     <div class="reviews">
         <h1>recent book reviews for {{book.title}}, written by {{book.author}}:</h1>
         {%for review in reviews reversed%}
-        <h4><a href="/books/{{review.book_id}}">title: {{review.book.title}}</a></h4>
+        <h4><a href="/books/{{review.book_id}}">{{review.book.title}}</a></h4>
+        <a href="/user/{{review.user.id}}">{{review.user.firstname}}</a>
         <p>rating: <span class="stars" data-stars="{{review.rating}}">xxxxx</span></p>
         <p>{{review.content}}</p>
         <p>posted on: -- {{review.created_at}}</p>
         {%endfor%}
     </div>
+    <div class="jumbotron bg-dark">
     <form action="/books/addreview" id='formtext' method="post">
         <select name="rating" size="1">
           <option value="0">0 stars</option>
+          <option value="0.5">0.5 stars</option>
           <option value="1">1 stars</option>
+          <option value="1.5">1.5 stars</option>
           <option value="2">2 stars</option>
+          <option value="2.5">2.5 stars</option>
           <option value="3">3 stars</option>
+          <option value="3.5">3.5 stars</option>
           <option value="4">4 stars</option>
+          <option value="4.5">4.5 stars</option>
           <option value="5">5 stars</option>
         </select><br>
         {% csrf_token %}
 
     <input type="hidden" name="bookid" value="{{book.id}}">
-    <textarea name="content" id="formtext" cols="30" rows="10"></textarea>
+    <textarea name="content" id="formtext" placeholder='write a new review, dont forget to leave a rating!' cols="40" rows="5"></textarea>
     <input type="submit" value="submit">
     </form>
     <div class="books">
         <a href="/books">go back</a>
         <a href="/logout">logout</a>
 
+    </div>
     </div>
 </body>
 </html>

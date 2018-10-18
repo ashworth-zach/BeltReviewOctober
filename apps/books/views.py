@@ -2,15 +2,23 @@ from django.shortcuts import render,redirect
 from .models import *
 from ..users.models import *
 from django.contrib import messages
+#------------------------------------------------------------------------
+#------------------------------------------------------------------------
+
 def index(request):
     if 'email' not in request.session:
         return redirect('/')
+
+    last_ten = Review.objects.all().order_by('-id')[:3]
+
+    last_ten_in_ascending_order = reversed(last_ten)
     context={
-        'reviews':Review.objects.all(),
+        'reviews':last_ten_in_ascending_order,
         'books':Book.objects.all().values(),
         'currentuser':User.objects.all().values().get(email=request.session['email'])
     }
     return render(request, 'books/index.html', context)
+#------------------------------------------------------------------------
 def addbook(request):
     if 'email' not in request.session:
         return redirect('/')
@@ -18,6 +26,7 @@ def addbook(request):
         'user':User.objects.get(email=request.session['email'])
     }
     return render(request, 'books/newbook.html')
+#------------------------------------------------------------------------
 def newbook(request):
     if 'email' not in request.session:
         return redirect('/')
@@ -55,12 +64,14 @@ def newbook(request):
         messages.success(request, "Book successfully posted")
         # redirect to a success route
         return redirect('/books')
+#------------------------------------------------------------------------
 def show(request, bookid):
     context={
         'book':Book.objects.get(id=bookid),
         'reviews':Review.objects.filter(book=bookid)
     }
     return render(request, 'books/show.html', context)
+#------------------------------------------------------------------------
 def addreview(request):
     errors = Review.objects.basic_validator(request.POST)
     bookid=request.POST['bookid']
@@ -79,3 +90,4 @@ def addreview(request):
 
         messages.success(request, "review successfully posted")
         return redirect('/books/'+str(bookid))
+#------------------------------------------------------------------------

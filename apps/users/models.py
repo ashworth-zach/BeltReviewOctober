@@ -3,6 +3,7 @@ from django.db import models
 import bcrypt
 import re
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
+#------------------------------------------------------------------------
 class UserManager(models.Manager):
     def basic_validator(self, postData):
         errors = {}
@@ -22,8 +23,9 @@ class UserManager(models.Manager):
         if postData['password'] != postData['passwordconf'] :
             errors["passwordconf"] = "passwords do not match"
         if not EMAIL_REGEX.match(postData['email']):
-            errors["email"] = "email is invalid"            
+            errors["email"] = "email is invalid"
         return errors
+
     def login_validator(self, postData):
         errors = {}
         if len(postData['password']) < 1 :
@@ -39,6 +41,7 @@ class UserManager(models.Manager):
         except:
             errors['login']="user does not exist in database"
             return errors
+#------------------------------------------------------------------------
 class User(models.Model):
     firstname = models.CharField(max_length=255)
     lastname = models.CharField(max_length=255)
@@ -52,3 +55,5 @@ class User(models.Model):
     # the old hidden objects key with a new one with extra properties!!!
     objects = UserManager()
     # *************************
+#------------------------------------------------------------------------
+

@@ -3,5 +3,6 @@ from . import views
 urlpatterns = [
     url(r'^$', views.index),
     url(r'^process$', views.add), 
+    url(r'^user/(?P<userid>\d+)$', views.show),    
     url(r'^login$', views.login),
 ]  

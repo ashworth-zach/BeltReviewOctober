@@ -52,3 +52,10 @@ def login(request):
 
     return redirect('/books')
 #------------------------------------------------------------------------
+def show(request,userid):
+    user=User.objects.all().get(id=userid)
+    context={
+        'user':user,
+        'reviews':Review.objects.all().filter(user=user)
+    }
+    return render(request,'users/show.html', context)
