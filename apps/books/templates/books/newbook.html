@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'users/css/style.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+    <title>add book</title>
+</head>
+<body>
+    <div class="jumbotron text-center">
+        <h1>add book:</h1>
+    </div>
+    <form action='/books/new', method='post'>
+        {% csrf_token %}
+        <label>title</label>
+        <input id="title" name="title" placeholder='title' type="text">
+        <label for="author">author</label>
+        <input id="author" name="author" placeholder='author' type="text">
+
+        <label for="desc">description</label>
+        <input id="desc" name="desc" placeholder='description' type="text"><br>
+
+            <select name="rating" size="1">
+              <option value="0">0 stars</option>
+              <option value="1">1 stars</option>
+              <option value="2">2 stars</option>
+              <option value="3">3 stars</option>
+              <option value="4">4 stars</option>
+              <option value="5">5 stars</option>
+            </select><br>
+        <label for="review">review</label>
+        <input id="review" name="content" placeholder='review' type="text">
+
+        <button type="submit">Submit</button>
+      </form>
+      <div class="errorbox">
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li {% if message.errors %} class="{{ message.errors }}" {% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li {% if message.errors1 %} class="{{ message.errors1 }}" {% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+      </div>
+
+</body>
+</html>

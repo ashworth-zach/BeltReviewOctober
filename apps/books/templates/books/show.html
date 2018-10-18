@@ -11,9 +11,9 @@
     <title>books</title>
 </head>
 <body>
-    <h1 class="jumbotron text-center">welcome {{currentuser.firstname}}</h1>
+    <div class="jumbotron text-center">Book title: {{book.title}}</div>
     <div class="reviews">
-        <h1>recent book reviews:</h1>
+        <h1>recent book reviews for {{book.title}}, written by {{book.author}}:</h1>
         {%for review in reviews reversed%}
         <h4><a href="/books/{{review.book_id}}">title: {{review.book.title}}</a></h4>
         <p>rating: <span class="stars" data-stars="{{review.rating}}">xxxxx</span></p>
@@ -21,19 +21,25 @@
         <p>posted on: -- {{review.created_at}}</p>
         {%endfor%}
     </div>
-    <div class="books">
-        <a href="/logout">logout</a>
-        <p></p>
-        <a href="/books/add">add book and review</a>
-        
-        <h3>other books with reviews</h3>
-        <div class="scrollbox">
+    <form action="/books/addreview" id='formtext' method="post">
+        <select name="rating" size="1">
+          <option value="0">0 stars</option>
+          <option value="1">1 stars</option>
+          <option value="2">2 stars</option>
+          <option value="3">3 stars</option>
+          <option value="4">4 stars</option>
+          <option value="5">5 stars</option>
+        </select><br>
+        {% csrf_token %}
 
-        {%for book in books%}
-        <a class='booklistitem' href="/books/{{book.id}}">{{book.title}}</a>
-    
-        {%endfor%}
-    </div>
+    <input type="hidden" name="bookid" value="{{book.id}}">
+    <textarea name="content" id="formtext" cols="30" rows="10"></textarea>
+    <input type="submit" value="submit">
+    </form>
+    <div class="books">
+        <a href="/books">go back</a>
+        <a href="/logout">logout</a>
+
     </div>
 </body>
 </html>

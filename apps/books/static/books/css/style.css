@@ -80,3 +80,6 @@ body {
     font: 16px/26px Georgia, Garamond, Serif;
     overflow: auto;
 }
+.booklistitem{
+  display: block;
+}
